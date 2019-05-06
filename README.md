@@ -40,3 +40,8 @@ The JMX port is the same used to bootstrap Kafka on every node.
 
 There are some discovery rules in order to automatically discover some informations.
 By default, the metrics related to the *__consumer_offset* topic won't be picked up. You can enable it by removing the `{#JMXTOPIC}` Macro filter in the related discovery rules.
+
+## Consumers, Producers, ...
+
+At the moment, this template is for broker metrics only. 
+If you want to include metrics from consumers, procuders, etc etc, you're free to put up a merge request.
