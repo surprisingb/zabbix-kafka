@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <zabbix_export>
     <version>3.4</version>
-    <date>2019-05-02T12:01:46Z</date>
+    <date>2019-09-26T12:01:46Z</date>
     <groups>
         <group>
             <name>Templates</name>
@@ -3610,7 +3610,7 @@
                             <type>16</type>
                             <snmp_community/>
                             <snmp_oid/>
-                            <key>jmx[&quot;kafka.server:type=FetcherLagMetrics,name=ConsumerLag,clientId={#JMXCLIENTID},topic={#JMXTOPIC} ,partition={#JMXPARTITION}&quot;,&quot;Value&quot;]</key>
+                            <key>jmx[&quot;kafka.server:type=FetcherLagMetrics,name=ConsumerLag,clientId={#JMXCLIENTID},topic={#JMXTOPIC},partition={#JMXPARTITION}&quot;,&quot;Value&quot;]</key>
                             <delay>60s</delay>
                             <history>90d</history>
                             <trends>365d</trends>
