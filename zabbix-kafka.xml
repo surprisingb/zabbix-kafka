@@ -27,6 +27,90 @@
             </applications>
             <items>
                 <item>
+                    <name>Kafka Offline Partitions Count</name>
+                    <type>16</type>
+                    <snmp_community/>
+                    <snmp_oid/>
+                    <key>jmx[&quot;kafka.controller:type=KafkaController,name=OfflinePartitionsCount&quot;,&quot;Value&quot;]</key>
+                    <delay>60s</delay>
+                    <history>30d</history>
+                    <trends>90d</trends>
+                    <status>0</status>
+                    <value_type>3</value_type>
+                    <allowed_hosts/>
+                    <units/>
+                    <snmpv3_contextname/>
+                    <snmpv3_securityname/>
+                    <snmpv3_securitylevel>0</snmpv3_securitylevel>
+                    <snmpv3_authprotocol>0</snmpv3_authprotocol>
+                    <snmpv3_authpassphrase/>
+                    <snmpv3_privprotocol>0</snmpv3_privprotocol>
+                    <snmpv3_privpassphrase/>
+                    <params/>
+                    <ipmi_sensor/>
+                    <authtype>0</authtype>
+                    <username>{$JMX_USER}</username>
+                    <password>{$JMX_PASS}</password>
+                    <publickey/>
+                    <privatekey/>
+                    <port/>
+                    <description/>
+                    <inventory_link>0</inventory_link>
+                    <applications>
+                        <application>
+                            <name>Kafka</name>
+                        </application>
+                    </applications>
+                    <valuemap/>
+                    <logtimefmt/>
+                    <preprocessing/>
+                    <jmx_endpoint>service:jmx:rmi:///jndi/rmi://{HOST.CONN}:{HOST.PORT}/jmxrmi</jmx_endpoint>
+                    <master_item/>
+                </item>  
+                  <item>
+                    <name>Kafka Broker State</name>
+                    <type>16</type>
+                    <snmp_community/>
+                    <snmp_oid/>
+                    <key>jmx[&quot;kafka.server:type=KafkaServer,name=BrokerState&quot;,&quot;Value&quot;]</key>
+                    <delay>60s</delay>
+                    <history>30d</history>
+                    <trends>90d</trends>
+                    <status>0</status>
+                    <value_type>3</value_type>
+                    <allowed_hosts/>
+                    <units/>
+                    <snmpv3_contextname/>
+                    <snmpv3_securityname/>
+                    <snmpv3_securitylevel>0</snmpv3_securitylevel>
+                    <snmpv3_authprotocol>0</snmpv3_authprotocol>
+                    <snmpv3_authpassphrase/>
+                    <snmpv3_privprotocol>0</snmpv3_privprotocol>
+                    <snmpv3_privpassphrase/>
+                    <params/>
+                    <ipmi_sensor/>
+                    <authtype>0</authtype>
+                    <username>{$JMX_USER}</username>
+                    <password>{$JMX_PASS}</password>
+                    <publickey/>
+                    <privatekey/>
+                    <port/>
+                    <description/>
+                    <inventory_link>0</inventory_link>
+                    <applications>
+                        <application>
+                            <name>Kafka</name>
+                        </application>
+                    </applications>
+                    <valuemap>
+                        <name>Kafka Broker State</name>
+                    </valuemap>
+                    <logtimefmt/>
+                    <preprocessing/>
+                    <jmx_endpoint>service:jmx:rmi:///jndi/rmi://{HOST.CONN}:{HOST.PORT}/jmxrmi</jmx_endpoint>
+                    <master_item/>
+                </item>              
+                <item>
                     <name>G1 Old Generation Count</name>
                     <type>16</type>
                     <snmp_community/>
@@ -3662,6 +3746,38 @@
     </templates>
     <triggers>
         <trigger>
+            <expression>{Template App Kafka:jmx[&quot;kafka.controller:type=KafkaController,name=OfflinePartitionsCount&quot;,&quot;Value&quot;].last()}&gt;0</expression>
+            <recovery_mode>0</recovery_mode>
+            <recovery_expression/>
+            <name>Kafka:: Found Offline Partitions</name>
+            <correlation_mode>0</correlation_mode>
+            <correlation_tag/>
+            <url/>
+            <status>1</status>
+            <priority>4</priority>
+            <description/>
+            <type>0</type>
+            <manual_close>0</manual_close>
+            <dependencies/>
+            <tags/>
+        </trigger>       
+        <trigger>
+            <expression>{Template App Kafka:jmx[&quot;kafka.server:type=KafkaServer,name=BrokerState&quot;,&quot;Value&quot;].last()}&lt;&gt;3</expression>
+            <recovery_mode>0</recovery_mode>
+            <recovery_expression/>
+            <name>Kafka Broker is not running</name>
+            <correlation_mode>0</correlation_mode>
+            <correlation_tag/>
+            <url/>
+            <status>1</status>
+            <priority>4</priority>
+            <description/>
+            <type>0</type>
+            <manual_close>0</manual_close>
+            <dependencies/>
+            <tags/>
+        </trigger>           
+        <trigger>
             <expression>{Template App Kafka:jmx[&quot;kafka.controller:type=KafkaController,name=ActiveControllerCount&quot;,&quot;Value&quot;].last()}=1</expression>
             <recovery_mode>0</recovery_mode>
             <recovery_expression/>
@@ -4614,4 +4730,35 @@
             </graph_items>
         </graph>
     </graphs>
+    <value_maps>
+        <value_map>
+            <name>Kafka Broker State</name>
+            <mappings>
+                <mapping>
+                    <value>0</value>
+                    <newvalue>NotRunning</newvalue>
+                </mapping>
+                <mapping>
+                    <value>1</value>
+                    <newvalue>Starting</newvalue>
+                </mapping>
+                <mapping>
+                    <value>2</value>
+                    <newvalue>RecoveringFromUncleanShutdown</newvalue>
+                </mapping>
+                <mapping>
+                    <value>3</value>
+                    <newvalue>RunningAsBroker</newvalue>
+                </mapping>
+                <mapping>
+                    <value>6</value>
+                    <newvalue>PendingControlledShutdown</newvalue>
+                </mapping>
+                <mapping>
+                    <value>7</value>
+                    <newvalue>BrokerShuttingDown</newvalue>
+                </mapping>
+            </mappings>
+        </value_map>
+    </value_maps>
 </zabbix_export>
