@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <zabbix_export>
-    <version>4.0</version>
+    <version>3.4</version>
     <date>2020-06-25T19:44:53Z</date>
     <value_maps>
         <value_map>
